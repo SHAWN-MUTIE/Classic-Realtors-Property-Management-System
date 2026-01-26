@@ -1,0 +1,21 @@
+# --- SENSITIVE DATA (THE RED ZONE) ---
+# Never, ever let these reach GitHub
+config.php
+db_connect.php
+keys.php
+credentials.php
+.env
+
+# --- PROJECT DEPENDENCIES ---
+vendor/
+node_modules/
+
+# --- OS & IDE TRASH ---
+.idea/
+.vscode/
+Thumbs.db
+desktop.ini
+*.log
+
+# --- DATABASE EXPORTS ---
+*.sql
