@@ -19,3 +19,12 @@ desktop.ini
 
 # --- DATABASE EXPORTS ---
 *.sql
+
+# Sensitive folders
+config/
+mpesa_log.txt
+
+# If mpesa_callback.php contains your SECRET keys (API Key/Secret), 
+# you should move those keys to a separate file like 'keys.php' 
+# and ignore that instead. But for now, let's ignore it if it's sensitive:
+mpesa_callback.php
