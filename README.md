@@ -1,4 +1,3 @@
-Gemini said
 Classic Realtors Property Management System (CRPMS)
 A web-based platform designed to automate and streamline rental property management for landlords and tenants. CRPMS replaces manual rent collection and record-keeping with a centralized digital system featuring automated M-Pesa payments, vacancy tracking, and digital receipts.
 
