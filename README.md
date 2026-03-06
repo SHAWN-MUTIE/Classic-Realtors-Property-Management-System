@@ -1,81 +1,207 @@
-Classic Realtors Property Management System (CRPMS)
-A web-based platform designed to automate and streamline rental property management for landlords and tenants. CRPMS replaces manual rent collection and record-keeping with a centralized digital system featuring automated M-Pesa payments, vacancy tracking, and digital receipts.
+# Classic Realtors Property Management System (CRPMS)
 
-🚀 Features
-Landlord Module
+A web-based platform designed to automate and streamline rental property management for landlords and tenants. CRPMS replaces manual rent collection and record‑keeping with a centralized digital system featuring automated M‑Pesa payments, vacancy tracking, and digital receipts.
 
-Property Management: Add, view, and delete properties.
+---
 
+## 🚀 Features
 
-Tenant Management: Register new tenants, assign units, and manage tenant statuses (Active/Inactive/Deleted) with full audit logging.
+### Landlord Module
 
+* **Property Management:** Add, view, and delete properties.
+* **Tenant Management:** Register new tenants, assign units, and manage tenant statuses (Active, Inactive, Deleted) with full audit logging.
+* **Financial Dashboard:** Track total income, view real‑time occupancy charts using Chart.js, and monitor tenant arrears.
+* **Service Requests:** View and resolve maintenance requests submitted by tenants.
+* **Payment Collection:** Initiate M‑Pesa STK Push requests directly to tenants with outstanding balances.
 
-Financial Dashboard: Track total income, view real-time occupancy charts (via Chart.js), and monitor tenant arrears.
+### Tenant Module
 
-Service Requests: View and resolve maintenance requests submitted by tenants.
+* **Secure Access:** Login using assigned house numbers and secure passwords.
+* **Rent Payments:** Direct integration with the Safaricom Daraja API (M‑Pesa STK Push) for instant rent payments.
+* **Digital Receipts:** View payment history and download PDF receipts automatically generated after successful payments.
+* **Service Requests:** Submit maintenance issues directly to the landlord.
 
-Payment Collection: Initiate M-Pesa STK push requests directly to tenants with outstanding balances.
+---
 
-Tenant Module
-Secure Access: Login using assigned house numbers and secure passwords.
+## 🧱 System Architecture
 
+**Frontend**
+HTML5 • CSS3 • Bootstrap 5 • JavaScript
 
-Rent Payments: Direct integration with Safaricom Daraja API (M-Pesa STK Push) for instant rent payments.
+**Backend**
+PHP 8.x using procedural architecture with MySQLi prepared statements
 
+**Database**
+MySQL 8.0
 
-Digital Receipts: View payment history and download PDF receipts automatically generated upon successful payment.
+**External Integrations**
 
-Service Requests: Submit maintenance issues directly to the landlord.
+* Safaricom Daraja API (M‑Pesa STK Push)
+* Chart.js (analytics dashboard)
+* html2pdf.js (digital receipt generation)
 
-🛠️ Tech Stack
+**Environment**
 
-Backend: PHP 8.x (Procedural + MySQLi Prepared Statements) 
+* XAMPP (Apache + MySQL)
+* Windows or Linux
 
+---
 
-Database: MySQL 8.0 
+## 📋 Prerequisites
 
+To run this project locally you will need:
 
-Frontend: HTML5, CSS3, Bootstrap 5 (Dark Theme), JavaScript 
+* XAMPP with Apache and MySQL enabled
+* Ngrok (required to receive M‑Pesa API callbacks on localhost)
+* A modern web browser
 
+---
 
-Integrations: Safaricom Daraja API (Sandbox) for M-Pesa, html2pdf.js, Chart.js
+## ⚙️ Installation & Setup
 
+### 1. Clone or Extract the Project
 
-Environment: XAMPP (Apache), Windows/Linux 
+Place the project folder inside your XAMPP `htdocs` directory.
 
-📋 Prerequisites
-To run this project locally, you will need:
+**Windows**
 
-XAMPP (with Apache and MySQL enabled)
+```
+C:\xampp\htdocs\crpms
+```
 
-Ngrok (required for receiving M-Pesa API callbacks on localhost)
+**Linux**
 
-A modern web browser
+```
+/opt/lampp/htdocs/crpms
+```
 
-⚙️ Installation & Setup
-1. Clone or Extract the Project
-Place the crpms folder inside your XAMPP htdocs directory:
+---
 
-Windows: C:\xampp\htdocs\crpms
+### 2. Database Setup
 
-Linux: /opt/lampp/htdocs/crpms
+1. Open XAMPP and start **Apache** and **MySQL**.
+2. Navigate to `http://localhost/phpmyadmin`.
+3. Create a new database named `crpms`.
+4. Import the `crpms.sql` file.
 
-2. Database Setup
-Open XAMPP and start Apache and MySQL.
+This will create the required tables:
 
-Go to http://localhost/phpmyadmin.
+* landlords
+* properties
+* tenants
+* payments
+* service_requests
+* audit_logs
 
-Create a new database named crpms.
+---
 
-Import the crpms.sql file (or run the provided database creation scripts) to set up the tables: landlords, properties, tenants, payments, service_requests, and audit_logs.
+### 3. Apache Virtual Hosts Configuration
 
-3. Apache Virtual Hosts Configuration (Required)
-This system uses separate ports for the Landlord (4500) and Tenant (5500) interfaces to ensure strict role separation.
+The system separates the landlord and tenant interfaces using different ports to enforce role isolation.
 
-Step A: Enable Ports
-Open apache/conf/httpd.conf and add:
+* **Landlord Panel:** Port 4500
+* **Tenant Portal:** Port 5500
 
-Apache
+#### Step A: Enable Ports
+
+Open the Apache configuration file:
+
+```
+apache/conf/httpd.conf
+```
+
+Add the following lines:
+
+```apache
 Listen 80
 Listen 4500
 Listen 5500
+```
+
+---
+
+### Step B: Configure Virtual Hosts
+
+Open:
+
+```
+apache/conf/extra/httpd-vhosts.conf
+```
+
+Add:
+
+```apache
+<VirtualHost *:4500>
+    DocumentRoot "C:/xampp/htdocs/crpms/landlord"
+    ServerName landlord.crpms.local
+</VirtualHost>
+
+<VirtualHost *:5500>
+    DocumentRoot "C:/xampp/htdocs/crpms/tenant"
+    ServerName tenant.crpms.local
+</VirtualHost>
+```
+
+Restart Apache after saving the configuration.
+
+---
+
+## 💳 M‑Pesa Integration Setup
+
+1. Create a developer account at the Safaricom Developer Portal.
+2. Generate sandbox credentials for the Daraja API.
+3. Configure your API keys in the project configuration file.
+4. Use **Ngrok** to expose your localhost callback URL to the internet.
+
+Example callback:
+
+```
+https://your-ngrok-url.ngrok.io/crpms/mpesa/callback.php
+```
+
+---
+
+## 📊 Dashboard Capabilities
+
+The landlord dashboard provides:
+
+* Real‑time occupancy visualization
+* Tenant arrears tracking
+* Total revenue analytics
+* Maintenance request monitoring
+
+All charts are rendered using **Chart.js**.
+
+---
+
+## 🔐 Security Features
+
+* Prepared SQL statements to prevent SQL injection
+* Role‑based interface separation
+* Password hashing for tenant authentication
+* Audit logging for sensitive actions
+
+---
+
+## 📦 Future Improvements
+
+Potential features for future versions:
+
+* SMS payment confirmations
+* Email notifications for receipts
+* Automated rent reminders
+* Mobile‑optimized tenant portal
+* Multi‑property analytics
+
+---
+
+## 👨‍💻 Author
+
+**Shawn David**
+Founder, Pixel Pioneers
+
+---
+
+## 📄 License
+
+This project is provided for educational and demonstration purposes.
