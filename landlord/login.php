@@ -1,49 +1,36 @@
 <?php
 session_start();
-require_once("../config/db.php");
-
-// If already logged in, redirect to dashboard
-if (isset($_SESSION['landlord_id'])) {
-    header("Location: dashboard.php");
-    exit();
-}
+require_once "../config/db.php";
+require_once "../includes/header.php";
 
 $error = "";
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = trim($_POST['username']);
-    $password = trim($_POST['password']);
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $username = trim($_POST["username"]);
+    $password = $_POST["password"];
 
-    $stmt = $conn->prepare("SELECT landlord_id, username, password FROM landlords WHERE username = ?");
+    $stmt = $conn->prepare(
+        "SELECT landlord_id, password 
+         FROM landlords 
+         WHERE username = ?"
+    );
     $stmt->bind_param("s", $username);
     $stmt->execute();
     $result = $stmt->get_result();
 
     if ($result->num_rows === 1) {
-        $user = $result->fetch_assoc();
+        $landlord = $result->fetch_assoc();
 
-        if (password_verify($password, $user['password'])) {
-            // ✅ CORRECT SESSION VARIABLES
-            $_SESSION['landlord_id'] = $user['landlord_id'];
-            $_SESSION['username']    = $user['username'];
-
+        if (password_verify($password, $landlord["password"])) {
+            $_SESSION["landlord_id"] = $landlord["landlord_id"];
             header("Location: dashboard.php");
             exit();
         }
     }
 
-    $error = "Invalid login details";
+    $error = "Invalid login credentials";
 }
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Landlord Login</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="bg-light">
 
 <div class="container mt-5">
     <div class="row justify-content-center">
@@ -58,21 +45,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <?php endif; ?>
 
                 <form method="POST">
-                    <input type="text"
-                           name="username"
-                           class="form-control mb-3"
-                           placeholder="Username"
-                           required>
-
-                    <input type="password"
-                           name="password"
-                           class="form-control mb-3"
-                           placeholder="Password"
-                           required>
-
-                    <button class="btn btn-dark w-100">
-                        Login
-                    </button>
+                    <input type="text" name="username" class="form-control mb-3" placeholder="Username" required>
+                    <input type="password" name="password" class="form-control mb-3" placeholder="Password" required>
+                    <button class="btn btn-dark w-100">Login</button>
                 </form>
 
                 <p class="text-center mt-3">
@@ -83,5 +58,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 </div>
 
-</body>
-</html>
+<?php require_once "../includes/footer.php"; ?>
