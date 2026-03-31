@@ -3,13 +3,15 @@ session_start();
 header('Content-Type: application/json'); // Tell JS we are sending JSON back
 
 // 1. Credentials
-$consumerKey = 'ZATU048GMjIx1RKvsiym4UsCZiAk4SN2uDAANn2A1mywmLGD'; 
-$consumerSecret = 'DmMryIxlDjvNeg8BnYpQXhGKfG3EfDTQK3YRr0dwqSKYTYrs1lu7hBA8VVYqIxbx';
-$BusinessShortCode = '174379'; 
-$Passkey = 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919';
+// 2. Daraja Credentials
+$consumerKey = 'YOUR_DARAJA_CONSUMER_KEY'; 
+$consumerSecret = 'YOUR_DARAJA_CONSUMER_SECRET';
+$BusinessShortCode = 'YOUR_PAYBILL_OR_TILL_NUMBER'; 
+$Passkey = 'YOUR_DARAJA_PASSKEY';
+$callback_url = 'https://your-production-domain.com/crpms/mpesa/callback.php';
 
 // YOUR NGROK URL
-$callback_url = ' https://joycelyn-nondiathermanous-gauge.ngrok-free.dev/crpms/mpesa/callback.php';
+$callback_url = ' use ngrok url provided';
 
 // 2. Safely get variables from the Dashboard
 if (!isset($_SESSION['phone']) || !isset($_POST['amount'])) {

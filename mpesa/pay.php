@@ -17,11 +17,12 @@ $stmt->bind_param("id", $tenant_id, $amount);
 $stmt->execute();
 
 // 2. Daraja Credentials
-$consumerKey = 'ZATU048GMjIx1RKvsiym4UsCZiAk4SN2uDAANn2A1mywmLGD'; 
-$consumerSecret = 'DmMryIxlDjvNeg8BnYpQXhGKfG3EfDTQK3YRr0dwqSKYTYrs1lu7hBA8VVYqIxbx';
-$BusinessShortCode = '174379'; 
-$Passkey = 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919';
-$callback_url = 'https://joycelyn-nondiathermanous-gauge.ngrok-free.dev/crpms/mpesa/callback.php';
+// 2. Daraja Credentials
+$consumerKey = 'YOUR_DARAJA_CONSUMER_KEY'; 
+$consumerSecret = 'YOUR_DARAJA_CONSUMER_SECRET';
+$BusinessShortCode = 'YOUR_PAYBILL_OR_TILL_NUMBER'; 
+$Passkey = 'YOUR_DARAJA_PASSKEY';
+$callback_url = 'https://your-production-domain.com/crpms/mpesa/callback.php';
 
 // 3. Authenticate
 $url = 'https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials';
