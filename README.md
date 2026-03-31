@@ -1,5 +1,10 @@
 # Classic Realtors Property Management System (CRPMS)
 
+![PHP](https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-00000F?style=for-the-badge&logo=mysql&logoColor=white)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white)
+![Security](https://img.shields.io/badge/Security-Hardened-success?style=for-the-badge)
+
 A web-based platform designed to automate and streamline rental property management for landlords and tenants. CRPMS replaces manual rent collection and record‑keeping with a centralized digital system featuring automated M‑Pesa payments, vacancy tracking, and digital receipts.
 
 ---
@@ -36,7 +41,7 @@ MySQL 8.0
 
 **External Integrations**
 
-* Safaricom Daraja API (M‑Pesa STK Push)
+* * Safaricom Daraja API (M‑Pesa Express STK Push & Asynchronous Callbacks)
 * Chart.js (analytics dashboard)
 * html2pdf.js (digital receipt generation)
 
@@ -176,10 +181,13 @@ All charts are rendered using **Chart.js**.
 
 ## 🔐 Security Features
 
-* Prepared SQL statements to prevent SQL injection
-* Role‑based interface separation
-* Password hashing for tenant authentication
-* Audit logging for sensitive actions
+As a security-first application, CRPMS implements multiple layers of defense to protect financial data and user privacy:
+
+* **Replay Attack Defense:** Webhook validation logic that verifies and drops duplicate Safaricom JSON payloads to prevent fraudulent balance deductions.
+* **Transaction Cancellation Handling:** Secure tracking of failed or cancelled API requests to a tamper-proof audit log.
+* **SQL Injection Prevention:** 100% utilization of Prepared Statements (`mysqli_prepare`) for database interactions.
+* **Cryptographic Hashing:** Strict enforcement of `password_verify()` and BCrypt hashing for tenant authentication.
+* **Session Hijacking Defenses:** Strict Role-Based Access Control (RBAC) boundaries enforced via separate Apache listening ports.
 
 ---
 
@@ -194,11 +202,13 @@ Potential features for future versions:
 * Multi‑property analytics
 
 ---
+## ⚠️ Disclaimer
+
+**This repository does not contain live API keys.** All sensitive credentials, including Daraja API keys and personal phone numbers, have been redacted for public security compliance.
 
 ## 👨‍💻 Author
 
-**Shawn David**
-Founder, Pixel Pioneers
+**Shawn Mutie** *BSc. Information Security and Forensics* *KCA University (Class of 2026)* Founder, Pixel Pioneers
 
 ---
 
